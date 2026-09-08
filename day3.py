@@ -17,22 +17,22 @@
   
 # 2
 
-num=[]
-for i in range(7):
-    a=int(input("Enter a number"))
-    num.append(a)
+# num=[]
+# for i in range(7):
+#     a=int(input("Enter a number"))
+#     num.append(a)
 
-for a in num:
-    if a<2:
-        print(a,"Num less than 2 are not the prime numbers")
+# for a in num:
+#     if a<2:
+#         print(a,"Num less than 2 are not the prime numbers")
 
-    else:
-        for i in range(2,a):
-            if a%i==0:
-                print(a, "is not a prime number")
-                break
-        else:
-            print(a, "is a prime number")
+#     else:
+#         for i in range(2,a):
+#             if a%i==0:
+#                 print(a, "is not a prime number")
+#                 break
+#         else:
+#             print(a, "is a prime number")
 
 
 # Fabonaciii
@@ -46,6 +46,7 @@ for a in num:
 #     a=b
 #     b=c
 # print(num)
+
 
 # 2
 # a=int(input("Enter First number"))
