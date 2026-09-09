@@ -20,7 +20,11 @@ print(m2)
 m2["Fee"]=m2["Fee"].fillna(m2["Fee"].mean())
 print(m2)
 
+print(m2.sort_values("Marks",ascending=False))
+
 m2=m2.dropna(subset=["City"])
+print(m2)
+m2=m2.reset_index(drop=True)
 print(m2)
 
 print(m2.groupby("City").agg(
