@@ -71,3 +71,4 @@ print(sr)
 
 sr_gender=d.groupby("Sex")["Survived"].mean()*100
 print(sr_gender)
+print(d.isna().sum())
