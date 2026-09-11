@@ -74,6 +74,7 @@ df = pd.DataFrame(data)
 print(df)
 print(df.head())
 print(df.shape)
+
 print(df.columns)
 print(df.dtypes)
 
