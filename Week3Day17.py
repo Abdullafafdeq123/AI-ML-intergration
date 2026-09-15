@@ -9,7 +9,7 @@ from sklearn.metrics import f1_score
 from sklearn.model_selection import cross_val_score
 
 df=pd.read_csv("Titanic.csv")
-# print(df)tell me in bullet poinsts
+# print(df)
 print(df.head())
 print(df.shape)
 print(df.columns)
