@@ -17,7 +17,6 @@ print(df.dtypes)
 print(df.isnull().sum())
 print(df["Survived"].unique())
 print(df["Survived"].nunique())
-print(df["Survived"].unique())
 print(df["Survived"].value_counts())
 
 print(df["Survived"].dtypes)
