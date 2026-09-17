@@ -94,6 +94,7 @@ print(rfe.ranking_)
 
 fn=X.columns
 selected=fn[rfe.support_]
+# check which one is selected or not
 print(selected)
 print(rfe.support_)
 print(rfe.ranking_)

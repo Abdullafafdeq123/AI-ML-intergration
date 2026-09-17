@@ -53,6 +53,6 @@ plt.plot(k,m)
 plt.title("Elbow Method")
 plt.xlabel("No of Clusters")
 plt.ylabel("Inertia")
-
+plt.grid()
 
 plt.show()
