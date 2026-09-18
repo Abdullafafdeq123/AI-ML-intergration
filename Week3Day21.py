@@ -14,6 +14,7 @@ from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 
+
 p=pd.read_csv("heart.csv")
 print(p)
 
