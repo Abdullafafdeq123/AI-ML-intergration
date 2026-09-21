@@ -5,103 +5,122 @@ from torchvision import datasets,transforms
 from torch.utils.data import DataLoader
 from sklearn.metrics import (accuracy_score,precision_score,recall_score,f1_score,confusion_matrix,classification_report)
 
-trans=transforms.ToTensor()
-train_data=datasets.MNIST(
+
+
+transform=transforms.ToTensor()
+traind=datasets.MNIST(
     root="data",
     train=True,
-    transform=trans,
+    transform=transform,
     download=True
-
 )
-test_data=datasets.MNIST(
+testd=datasets.MNIST(
     root="data",
     train=False,
-    transform=trans,
+    transform=transform,
     download=True
+
 )
 
-trainL=DataLoader(
-    train_data,
+traindl=DataLoader(
+    traind,
     batch_size=32,
     shuffle=True
+    
 )
-testL=DataLoader(
-    test_data,
+testdl=DataLoader(
+    testd,
     batch_size=32,
     shuffle=False
 )
-
-print(len(train_data))
-print(len(test_data))
-
-images,labels=next(iter(trainL))
-print(images)
-print(labels)
+images,labels=next(iter(traindl))
 print(images.shape)
-print(images.dtype)
 print(labels.shape)
-
-print(labels[0])
-print(len(trainL))
-
 
 class my(nn.Module):
     def __init__(self):
         super().__init__()
         
-        self.fl=nn.Flatten()
-        self.l1=nn.Linear(784,128)
+        self.c1=nn.Conv2d(
+            in_channels=1,
+            out_channels=16,
+            kernel_size=3
+        )
         self.r1=nn.ReLU()
-        self.l2=nn.Linear(128,10)
         
-    def forward(self,x):
-        x=self.fl(x)
-        x=self.l1(x)
-        x=self.r1(x)
-        x=self.l2(x)
+        self.m1=nn.MaxPool2d(kernel_size=2)
         
-        return x
+        self.f=nn.Flatten()
+        
+        self.l=nn.Linear(2704,10)
+    
+    def forward(self, x):
+         x = self.c1(x)
+         x = self.r1(x)
+         x = self.m1(x)
+         x = self.f(x)
+         x = self.l(x)
+            
+         return x
+                
+
+        
+                 
+                       
+               
+        
+   
 model=my()
 print(model)
 
 out=model(images)
-print(out)
-print(out[0])
+print(out.shape)
 
-loss=nn.CrossEntropyLoss()
+l=nn.CrossEntropyLoss()
+print(l)
 
-op=optim.Adam(model.parameters(),lr=0.001)
-
+op=optim.Adam(
+    model.parameters(),
+    lr=0.001
+)
+print(op)
 
 for epoch in range(5):
     model.train()
-    losses=[]
-    for images,labels in trainL:
+    tl=0
+    
+    for images,labels in traindl:
+        out=model(images)
+        
+        loss=l(out,labels)
         
         op.zero_grad()
-
-        newvar=model(images)
-
-        loss_v=loss(newvar,labels)
-        losses.append(loss_v.item())
-        loss_v.backward()
-
+        
+        loss.backward()
+        
         op.step()
-    avg=sum(losses)/len(losses)
-    print(epoch+1,avg)
+        
+        tl+=loss.item()
+    
+    avgl=tl/len(traindl)
+    
+    print(epoch+1,avgl)
+    
+        
 
 model.eval()
+
 all_pre=[]
 all_label=[]
 with torch.no_grad():
-    for images,labels in testL:
+    for images,labels in testdl:
         out=model(images)
     
         pred=out.argmax(dim=1)
         
         all_pre.extend(pred.tolist())
         all_label.extend(labels.tolist())
-    
+        
 acc=accuracy_score(all_label,all_pre)
 print(acc)
 
@@ -119,8 +138,3 @@ print(con)
 
 cr=classification_report(all_label,all_pre)
 print(cr)
-
-
-torch.save(model.state_dict(),"mnist_ann.pth")
-        
-    
